@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { ToastrService } from 'ngx-toastr';
 import { Album } from 'src/app/models/album/album';
 import { Favorite } from 'src/app/models/favorite/favorite';
-import { FavoriteService } from 'src/app/services/favorite.service';
+import * as AllFavoriteActions from '../../../store/actions/favorite-actions';
 
 @Component({
   selector: 'app-favorite-list',
@@ -12,16 +13,22 @@ import { FavoriteService } from 'src/app/services/favorite.service';
 export class FavoriteListComponent implements OnInit {
   favorites: Favorite[] = [];
   constructor(
-    private favoriteService: FavoriteService,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private store: Store<any>
   ) {}
 
   ngOnInit(): void {
-    this.favorites = this.favoriteService.getFavorites();
+    this.getFavorites();
+  }
+
+  getFavorites() {
+    this.store.select('favoriteReducer').subscribe((data) => {
+      this.favorites = data;
+    });
   }
 
   removeFavorite(album: Album) {
-    this.favoriteService.removeFavorite(album);
+    this.store.dispatch(new AllFavoriteActions.RemoveFromFavorite(album));
     this.toastrService.info('Favorilerden çıkartıldı', album.title);
   }
 }

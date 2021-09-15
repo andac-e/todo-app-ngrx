@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { ToastrService } from 'ngx-toastr';
 import { Album } from 'src/app/models/album/album';
 import { AlbumService } from 'src/app/services/album.service';
-import { FavoriteService } from 'src/app/services/favorite.service';
 import { PagingInfo } from 'src/app/shared/models/paging-info';
+import * as AllFavoriteActions from '../../../store/actions/favorite-actions';
 
 @Component({
   selector: 'app-album-list',
@@ -15,7 +17,8 @@ export class AlbumListComponent implements OnInit {
 
   constructor(
     private albumService: AlbumService,
-    private favoriteService: FavoriteService
+    private store: Store<any>,
+    private toastrService: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -25,6 +28,7 @@ export class AlbumListComponent implements OnInit {
   }
 
   addToFavorite(album: Album) {
-    this.favoriteService.addToFavorite(album);
+    this.store.dispatch(new AllFavoriteActions.AddToFavorite(album));
+    this.toastrService.success('Favorilere eklendi', album.title);
   }
 }

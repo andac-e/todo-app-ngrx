@@ -23,6 +23,8 @@ import { NotFoundComponent } from './features/not-found/not-found.component';
 import { UserTableComponent } from './features/user/user-table/user-table.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { StoreModule } from '@ngrx/store';
+import { favoriteReducer } from './store/reducers/favorite-reducer';
 
 @NgModule({
   declarations: [
@@ -40,7 +42,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     TodoFilterPipe,
     UserFilterPipe,
     NotFoundComponent,
-    UserTableComponent
+    UserTableComponent,
   ],
   imports: [
     BrowserModule,
@@ -52,8 +54,16 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     NgxPaginationModule,
     NgxSpinnerModule,
     ToastrModule.forRoot({ positionClass: 'toast-bottom-right' }),
+    StoreModule.forRoot(
+      { favoriteReducer },
+      {
+        runtimeChecks: {
+          strictStateImmutability: false,
+        },
+      }
+    ),
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
