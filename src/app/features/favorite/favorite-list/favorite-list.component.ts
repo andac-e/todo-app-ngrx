@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { ToastrService } from 'ngx-toastr';
 import { Album } from 'src/app/models/album/album';
-import { Favorite } from 'src/app/models/favorite/favorite';
+import { Favorite } from 'src/app/models/states/favorite';
 import * as AllFavoriteActions from '../../../store/actions/favorite-actions';
 
 @Component({

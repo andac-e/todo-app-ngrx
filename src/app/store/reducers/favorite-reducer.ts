@@ -1,4 +1,4 @@
-import { Favorite } from 'src/app/models/favorite/favorite';
+import { Favorite } from 'src/app/models/states/favorite';
 import {
   FavoriteActions,
   FavoriteActionTypes,
